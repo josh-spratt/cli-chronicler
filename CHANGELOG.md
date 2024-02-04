@@ -1,3 +1,13 @@
+## 0.2.0
+
+Released on February 4, 2024.
+
+### Changed
+
+* SQLite database files rather than csv files for storing data.
+* UTC and local timestamps for when the event occurred, rather than just UTC.
+* Optional flag changed from "project" to "description" to make it more general.
+
 ## 0.1.0
 
 Released on February 3, 2024.
