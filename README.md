@@ -1,2 +1,27 @@
-# cli-chronicler
+## Cli Chronicler
 A command line app for keeping track of project/work times.
+
+### Features
+
+* Keep track of when you punch in and out for the day.
+* Keep track of project times by using an optional description flag.
+
+### Installation
+
+```Bash
+pip install cli-chronicler==0.4.0
+```
+
+### Usage
+
+#### Punch In/Out Without Description
+
+```Bash
+punch
+```
+
+#### Punch In/Out With Description
+
+```Bash
+punch -d 'pypi project development'
+```
