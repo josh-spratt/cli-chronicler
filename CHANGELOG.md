@@ -1,3 +1,19 @@
+## 0.4.0
+
+Released on February 17, 2024.
+
+### Changed
+
+* Added logic to use the `README.md` contents as the PyPi description
+
+## 0.3.0
+
+Released on February 17, 2024.
+
+### Changed
+
+* Restructured the project to conform to necessary structure to distribute via PyPi.
+
 ## 0.2.0
 
 Released on February 4, 2024.
