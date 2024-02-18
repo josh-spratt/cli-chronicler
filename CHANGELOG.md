@@ -1,3 +1,11 @@
+## 0.6.0
+
+Released on February 18, 2024.
+
+### Added
+
+* A new feature that provides a list of open punches.
+
 ## 0.5.1
 
 Released on February 18, 2024.

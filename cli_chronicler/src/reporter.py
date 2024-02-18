@@ -26,8 +26,7 @@ from (select
 		  , description
 		  , count(*) over (partition by description order by time_punched_at_local) % 2 as is_odd
 		  , lead(time_punched_at_local, 1) over (partition by description order by time_punched_at_local) as description_lead
-		from time_punch_events
-		where substr(time_punched_at_utc, 1, 10) = current_date) as events_with_windows
+		from time_punch_events) as events_with_windows
 where is_odd = 1
   and description_lead is null;
 """
@@ -38,9 +37,16 @@ def generate_daily_report():
     with conn:
         result = conn.execute(HOURS_BY_CATEGORY).fetchall()
     width = 40
-    print("+=" + "=" * 46 + "=+")
     print("Hour Totals by Category")
-    print("+=" + "=" * 46 + "=+")
     for row in result:
         print(row[0].ljust(width) + str(row[1]).ljust(width))
-    print("+=" + "=" * 46 + "=+")
+
+
+def retrieve_open_punches():
+    conn = sqlite3.connect(DB_FILE_PATH)
+    with conn:
+        result = conn.execute(OPEN_PUNCHES).fetchall()
+    width = 20
+    print("Open Punches")
+    for row in result:
+        print(row[1].ljust(width) + str(row[0]).ljust(width))
