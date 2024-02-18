@@ -10,7 +10,7 @@ A command line app for keeping track of project/work times.
 ### Installation
 
 ```Bash
-pip install cli-chronicler==0.4.0
+pip install cli-chronicler
 ```
 
 ### Usage

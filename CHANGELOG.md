@@ -1,3 +1,11 @@
+## 0.5.1
+
+Released on February 18, 2024.
+
+### Fixed
+
+* A typo in the README.
+
 ## 0.5.0
 
 Released on February 18, 2024.
