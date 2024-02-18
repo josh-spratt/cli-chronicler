@@ -1,10 +1,18 @@
+## 0.5.0
+
+Released on February 18, 2024.
+
+### Added
+
+* A new feature that provides a report of the current day.
+
 ## 0.4.0
 
 Released on February 17, 2024.
 
 ### Changed
 
-* Added logic to use the `README.md` contents as the PyPi description
+* Added logic to use the `README.md` contents as the PyPi description.
 
 ## 0.3.0
 

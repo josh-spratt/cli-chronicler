@@ -5,6 +5,7 @@ A command line app for keeping track of project/work times.
 
 * Keep track of when you punch in and out for the day.
 * Keep track of project times by using an optional description flag.
+* View a report of hours for the current day.
 
 ### Installation
 
@@ -24,4 +25,10 @@ punch
 
 ```Bash
 punch -d 'pypi project development'
+```
+
+#### View Today's Report
+
+```Bash
+punch -r
 ```
