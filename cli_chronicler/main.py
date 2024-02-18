@@ -2,7 +2,7 @@ import argparse
 from datetime import datetime
 import sqlite3
 import os
-from cli_chronicler.src.reporter import generate_daily_report
+from cli_chronicler.src.reporter import generate_daily_report, retrieve_open_punches
 
 # Global Constants
 DB_FILE_PATH = "cli_chronicler/db/punch_db.db"
@@ -40,9 +40,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--description", required=False)
     parser.add_argument("-r", "--report", required=False, action="store_true")
+    parser.add_argument("-o", "--open", required=False, action="store_true")
     arguments = parser.parse_args()
     if arguments.report:
         generate_daily_report()
+    elif arguments.open:
+        retrieve_open_punches()
     else:
         punch_to_log = TimePunchEvent(
             datetime.utcnow(), datetime.now(), arguments.description

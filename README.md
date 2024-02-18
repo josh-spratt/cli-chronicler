@@ -1,4 +1,5 @@
 ## Cli Chronicler
+
 A command line app for keeping track of project/work times.
 
 ### Features
@@ -31,4 +32,10 @@ punch -d 'pypi project development'
 
 ```Bash
 punch -r
+```
+
+#### View Open Punches
+
+```Bash
+punch -o
 ```
