@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="cli_chronicler",
-    version="0.4.0",
+    version="0.5.1",
     packages=find_packages(),
     entry_points={"console_scripts": ["punch = cli_chronicler:main"]},
     long_description=desc,

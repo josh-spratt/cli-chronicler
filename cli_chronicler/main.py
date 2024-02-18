@@ -2,6 +2,7 @@ import argparse
 from datetime import datetime
 import sqlite3
 import os
+from cli_chronicler.src.reporter import generate_daily_report
 
 # Global Constants
 DB_FILE_PATH = "cli_chronicler/db/punch_db.db"
@@ -38,19 +39,23 @@ def build_tables(sql_file_path, conn):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--description", required=False)
+    parser.add_argument("-r", "--report", required=False, action="store_true")
     arguments = parser.parse_args()
-    punch_to_log = TimePunchEvent(
-        datetime.utcnow(), datetime.now(), arguments.description
-    )
-    if os.path.isfile(
-        DB_FILE_PATH
-    ):  # If the db file already exists with punches, then insert.
-        conn = sqlite3.connect(DB_FILE_PATH)
-        punch_to_log.write_event_to_db(conn)
-    else:  # If the db file does not exist, then create new file, create tables, and insert.
-        conn = sqlite3.connect(DB_FILE_PATH)
-        build_tables(SQL_FILE_PATH, conn)
-        punch_to_log.write_event_to_db(conn)
+    if arguments.report:
+        generate_daily_report()
+    else:
+        punch_to_log = TimePunchEvent(
+            datetime.utcnow(), datetime.now(), arguments.description
+        )
+        if os.path.isfile(
+            DB_FILE_PATH
+        ):  # If the db file already exists with punches, then insert.
+            conn = sqlite3.connect(DB_FILE_PATH)
+            punch_to_log.write_event_to_db(conn)
+        else:  # If the db file does not exist, then create new file, create tables, and insert.
+            conn = sqlite3.connect(DB_FILE_PATH)
+            build_tables(SQL_FILE_PATH, conn)
+            punch_to_log.write_event_to_db(conn)
 
 
 if __name__ == "__main__":
