@@ -5,9 +5,7 @@ import os
 from cli_chronicler.src.reporter import generate_daily_report, retrieve_open_punches
 
 # Global Constants
-DB_FILE_PATH = "cli_chronicler/db/punch_db.db"
-SQL_FILE_PATH = "cli_chronicler/sql/time_punch_events.sql"
-
+DB_FILE_PATH = ".chronicler/punch_db.db"
 
 class TimePunchEvent:
     """Class for keeping track of a time punch event."""
@@ -30,10 +28,16 @@ class TimePunchEvent:
             )
 
 
-def build_tables(sql_file_path, conn):
-    with open(sql_file_path) as f:
-        for statement in f.read().split("\n\n"):
-            conn.execute(statement)
+def build_tables(conn):
+    with conn:
+        conn.execute(
+            """
+create table if not exists time_punch_events (
+    time_punched_at_utc text,
+    time_punched_at_local text,
+    description text
+);"""
+        )
 
 
 def main():
@@ -56,8 +60,9 @@ def main():
             conn = sqlite3.connect(DB_FILE_PATH)
             punch_to_log.write_event_to_db(conn)
         else:  # If the db file does not exist, then create new file, create tables, and insert.
+            os.mkdir(".chronicler")
             conn = sqlite3.connect(DB_FILE_PATH)
-            build_tables(SQL_FILE_PATH, conn)
+            build_tables(conn)
             punch_to_log.write_event_to_db(conn)
 
 

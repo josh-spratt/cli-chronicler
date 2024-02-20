@@ -1,3 +1,11 @@
+## 0.6.1
+
+Released on February 19, 2024.
+
+### Fixed
+
+* A bug that prevented users who pip installed from initializing the sqlite database file.
+
 ## 0.6.0
 
 Released on February 18, 2024.

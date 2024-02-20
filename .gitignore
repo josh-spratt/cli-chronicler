@@ -160,5 +160,5 @@ cython_debug/
 #.idea/
 out/*.csv
 *.db
-cli_chronicler/sql/test_*
+cli_chronicler/test_data.sql
 .DS_Store

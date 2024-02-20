@@ -1,6 +1,6 @@
 import sqlite3
 
-DB_FILE_PATH = "cli_chronicler/db/punch_db.db"
+DB_FILE_PATH = ".chronicler/punch_db.db"
 HOURS_BY_CATEGORY = """
 -- hours by category
 select
