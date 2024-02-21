@@ -1,3 +1,11 @@
+## 0.6.2
+
+Released on February 20, 2024.
+
+### Fixed
+
+* A bug that would cause the app to crash when running `punch -o` when there was an open punch with a `NULL` description field.
+
 ## 0.6.1
 
 Released on February 19, 2024.
