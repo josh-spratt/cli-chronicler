@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="cli_chronicler",
-    version="0.6.1",
+    version="0.6.2",
     packages=find_packages(),
     entry_points={"console_scripts": ["punch = cli_chronicler:main"]},
     description="A command line app for keeping track of project/work times.",

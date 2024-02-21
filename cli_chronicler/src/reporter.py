@@ -20,7 +20,7 @@ OPEN_PUNCHES = """
 -- open punches
 select
 	time_punched_at_local
-  , description
+  , coalesce(description, 'day start') as description
 from (select
 			time_punched_at_local
 		  , description
