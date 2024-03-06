@@ -1,11 +1,14 @@
 import argparse
 from datetime import datetime
-import sqlite3
 import os
-from cli_chronicler.src.reporter import generate_daily_report, retrieve_open_punches
+from cli_chronicler.src.reporter import (
+    generate_daily_report,
+    retrieve_open_punches,
+    connect_to_db,
+)
+from cli_chronicler.src.utils import read_config
+import logging
 
-# Global Constants
-DB_FILE_PATH = ".chronicler/punch_db.db"
 
 class TimePunchEvent:
     """Class for keeping track of a time punch event."""
@@ -17,6 +20,7 @@ class TimePunchEvent:
 
     def write_event_to_db(self, conn):
         """Writes time punch event to sqlite db."""
+        logger = logging.getLogger(__name__)  # Get logger for current module
         with conn:
             conn.execute(
                 "insert into time_punch_events (time_punched_at_utc, time_punched_at_local, description) values (?, ?, ?)",
@@ -26,6 +30,7 @@ class TimePunchEvent:
                     self.description,
                 ),
             )
+        logger.info("Successfully wrote time punch event to DB.")
 
 
 def build_tables(conn):
@@ -41,28 +46,42 @@ create table if not exists time_punch_events (
 
 
 def main():
+    script_dir = os.path.dirname(__file__)
+    config_path = os.path.join(script_dir, "config.yaml")
+    config = read_config(config_path)
+    db_file_path = config["db_file_path"]
+    report_sql_path = os.path.join(script_dir, config["report_sql_path"])
+    open_punch_sql_path = os.path.join(script_dir, config["open_punch_sql_path"])
+
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--description", required=False)
     parser.add_argument("-r", "--report", required=False, action="store_true")
     parser.add_argument("-o", "--open", required=False, action="store_true")
     arguments = parser.parse_args()
-    if arguments.report:
-        generate_daily_report()
-    elif arguments.open:
-        retrieve_open_punches()
-    else:
-        punch_to_log = TimePunchEvent(
-            datetime.utcnow(), datetime.now(), arguments.description
-        )
-        if os.path.isfile(
-            DB_FILE_PATH
-        ):  # If the db file already exists with punches, then insert.
-            conn = sqlite3.connect(DB_FILE_PATH)
+
+    if os.path.isfile(db_file_path):
+        conn = connect_to_db(db_file_path)
+        if arguments.report:
+            generate_daily_report(conn, report_sql_path)
+        elif arguments.open:
+            retrieve_open_punches(conn, open_punch_sql_path)
+        else:
+            punch_to_log = TimePunchEvent(
+                datetime.utcnow(), datetime.now(), arguments.description
+            )
             punch_to_log.write_event_to_db(conn)
-        else:  # If the db file does not exist, then create new file, create tables, and insert.
-            os.mkdir(".chronicler")
-            conn = sqlite3.connect(DB_FILE_PATH)
-            build_tables(conn)
+    else:
+        os.mkdir(".chronicler")
+        conn = connect_to_db(db_file_path)
+        build_tables(conn)
+        if arguments.report:
+            generate_daily_report(conn, report_sql_path)
+        elif arguments.open:
+            retrieve_open_punches(conn, open_punch_sql_path)
+        else:
+            punch_to_log = TimePunchEvent(
+                datetime.utcnow(), datetime.now(), arguments.description
+            )
             punch_to_log.write_event_to_db(conn)
 
 

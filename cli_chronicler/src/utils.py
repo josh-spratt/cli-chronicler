@@ -1,0 +1,7 @@
+import yaml
+
+
+def read_config(file_path: str) -> dict:
+    """Read the yaml config file and parse the db_file_path."""
+    with open(file_path, "r") as f:
+        return yaml.safe_load(f)

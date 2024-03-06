@@ -1,0 +1,2 @@
+include cli_chronicler/sql/*.sql
+include cli_chronicler/config.yaml
