@@ -1,3 +1,15 @@
+## 0.6.3
+
+Released on March 5, 2024.
+
+### Changed
+
+* A significant refactor was undertaken including:
+    * Storage of previously hardcoded values in config files.
+    * Increased reusability of code in reporter module by introducing new functions.
+    * Type hints for all functions.
+    * Tests
+
 ## 0.6.2
 
 Released on February 20, 2024.

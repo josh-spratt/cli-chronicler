@@ -1,0 +1,3 @@
+db_file_path: .chronicler/punch_db.db
+report_sql_path: sql/hours_by_category.sql
+open_punch_sql_path: sql/open_punches.sql
