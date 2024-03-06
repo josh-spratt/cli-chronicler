@@ -1,6 +1,6 @@
 ## 0.6.3
 
-Released on February 20, 2024.
+Released on March 5, 2024.
 
 ### Changed
 
